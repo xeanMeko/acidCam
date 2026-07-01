@@ -16,7 +16,7 @@ MODEL_W = 312
 INPUT_SHAPE = (1, 3, MODEL_H, MODEL_W)
 IMAGE_EXTENSIONS = (".png", ".jpg", ".jpeg", ".bmp", ".tif", ".tiff")
 
-DEFAULT_ENGINE = PROJECT_ROOT / "exports" / "rfdetr" / "rfdetr-seg-nano.engine"
+DEFAULT_ENGINE = PROJECT_ROOT / "exports" / "rfdetr" / "rfdetr-seg-nano_autocast_fp16.engine"
 DEFAULT_INPUT = PROJECT_ROOT / "test"
 DEFAULT_RAW_OUTPUT_DIR = PROJECT_ROOT / "runs" / "tensorrt_raw_outputs"
 DEFAULT_MASK_OUTPUT_DIR = PROJECT_ROOT / "runs" / "tensorrt_mask_overlays"

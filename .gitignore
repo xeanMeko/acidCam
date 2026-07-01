@@ -1,6 +1,18 @@
 .venv/
+venv/
+env/
+
 __pycache__/
-*.pyc
+*.py[cod]
+*$py.class
+
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.ipynb_checkpoints/
 
 runs/
 .vscode/
+.DS_Store
+
+*.engine

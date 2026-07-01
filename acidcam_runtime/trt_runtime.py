@@ -47,8 +47,8 @@ def engine_rebuild_hint(engine_path: Path) -> str:
         f"Failed to deserialize TensorRT engine: {engine_path}\n"
         "TensorRT .engine files are tied to the TensorRT/CUDA/GPU runtime that built them. "
         "Rebuild the engine on this machine/runtime, for example:\n"
-        "  trtexec --onnx=exports/rfdetr/rfdetr-seg-nano.onnx "
-        "--saveEngine=exports/rfdetr/rfdetr-seg-nano.engine --fp16 --memPoolSize=workspace:2048"
+        "  trtexec --onnx=exports/rfdetr/rfdetr-seg-nano_autocast_fp16.onnx "
+        "--saveEngine=exports/rfdetr/rfdetr-seg-nano_autocast_fp16.engine --memPoolSize=workspace:2048"
     )
 
 

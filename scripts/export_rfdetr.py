@@ -411,15 +411,15 @@ def build_tensorrt_engine(args: argparse.Namespace, onnx_path: Path, trtexec: st
 
 def main() -> None:
     args = parse_args()
-    # checkpoint = resolve_existing_path(args.checkpoint, "RF-DETR checkpoint")
+    checkpoint = resolve_existing_path(args.checkpoint, "RF-DETR checkpoint")
 
     trtexec = None
     if args.format in {"engine", "both"}:
         trtexec = require_trtexec(args)
 
-    # onnx_path = export_onnx(args, checkpoint)
-    # print(f"ONNX export complete: {onnx_path}")
-    onnx_path = Path("exports/rfdetr/rfdetr-seg-nano.onnx")
+    onnx_path = export_onnx(args, checkpoint)
+    print(f"ONNX export complete: {onnx_path}")
+
     if args.onnx_fp16:
         onnx_path = convert_onnx_to_fp16(onnx_path)
         print(f"FP16 ONNX path: {onnx_path}")
