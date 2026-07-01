@@ -9,7 +9,6 @@ an LCUS-1 / ARCELI USB relay as the pass/fail output.
 
 ```text
 acidcam_runtime/              Runtime package used by run.py
-scripts/export_rfdetr.py      RF-DETR ONNX export and TensorRT build helper
 scripts/inference.py          ONNX Runtime benchmark helper
 scripts/cpugpuTest.py         TensorRT benchmark / GPU telemetry helper
 scripts/gpioTest.py           USB relay smoke test helper
@@ -18,7 +17,7 @@ exports/rfdetr/               Exported ONNX / TensorRT model artifacts
 test/                         Sample validation images and COCO annotations
 notebooks/                    Exploratory notebooks
 runtime_config.yaml           Default local runtime configuration
-data.yaml                     Dataset class names and training metadata
+data.yaml                     Dataset class names and training metadata (Deprecated, no training here)
 ```
 
 Generated runtime outputs are written under `runs/`, which is intentionally
@@ -36,9 +35,12 @@ python -m pip install --upgrade pip
 python -m pip install -r requirements.txt
 ```
 
-TensorRT engine files are tied to the TensorRT/CUDA/GPU stack that built them. If
-an engine fails to deserialize on a target machine, rebuild it on that same
-machine.
+TensorRT engine files are tied to the TensorRT/CUDA/GPU stack that built them. It is best to rebuild the engine when using different target machine.
+
+```bash
+python convert_onnx_to_tensorRT.py
+```
+
 
 ## Configuration
 
@@ -61,6 +63,8 @@ Useful config keys:
 - `output_mode`: `usb`, `gpio`, or `none`
 - `output_dry_run`: print output actions without touching hardware
 - `save_raw`: save raw TensorRT output tensors in batch mode
+
+Always adjust crop_box if camera setup has been modified.
 
 ## Running
 
@@ -94,36 +98,6 @@ physical outputs:
 ```bash
 python run.py --mode visualizer --output-mode usb --output-dry-run
 python run.py --mode visualizer --output-mode gpio --gpio-pin 15 --output-dry-run
-```
-
-## Model Export And TensorRT
-
-The main export helper is `scripts/export_rfdetr.py`.
-
-Export ONNX from a checkpoint:
-
-```bash
-python scripts/export_rfdetr.py \
-  --checkpoint runs/rfdetr/rfdetr_seg_nano/checkpoint_best_ema.pth \
-  --format onnx \
-  --imgsz 312
-```
-
-Build a TensorRT engine with `trtexec`:
-
-```bash
-python scripts/export_rfdetr.py \
-  --checkpoint runs/rfdetr/rfdetr_seg_nano/checkpoint_best_ema.pth \
-  --format engine \
-  --imgsz 312
-```
-
-For a quick conversion from an existing ONNX file:
-
-```bash
-python convert_onnx_to_tensorRT.py \
-  --onnx exports/rfdetr/rfdetr-seg-nano_autocast_fp16.onnx \
-  --engine exports/rfdetr/rfdetr-seg-nano_autocast_fp16.engine
 ```
 
 ## Outputs
