@@ -1,0 +1,55 @@
+# AcidCam runtime defaults.
+# CLI flags override these values when provided.
+
+mode: visualizer # visualizer, debug, deploy, batch
+engine: exports/rfdetr/rfdetr-seg-nano_autocast_fp16.engine
+input: test
+camera: /dev/video0
+
+capture_width: 3840
+capture_height: 2160
+# Low-latency camera options. For /dev/video* on Jetson/Linux, v4l2 + MJPG often reads faster
+# than raw 4K frames if the camera supports it. Use v4l2-ctl --list-formats-ext to confirm.
+capture_backend: v4l2 # default, v4l2, gstreamer
+capture_fourcc: MJPG # MJPG, YUYV, or empty for camera default
+capture_fps: 0 # 0 leaves camera default
+max_stale_frames: 0
+crop_box: 1600,1200,2180,1680
+stream_seconds: 0.0
+print_every: 30
+display_width: 1200
+display_every: 2 # visualizer only: redraw every N processed frames to reduce imshow/drawing overhead
+warmup_runs: 10
+verbose: false
+
+# Output backend:
+#   gpio = Jetson GPIO pin
+#   usb  = LCUS-1 / ARCELI USB relay
+#   none = no physical output
+output_mode: usb
+output_dry_run: false
+
+# GPIO output.
+# Kept for compatibility. Ignored when output_mode: usb.
+gpio_pin: 15
+gpio_numbering: BOARD
+gpio_dry_run: false
+no_gpio: false
+
+# USB relay output.
+# Check with: ls /dev/ttyUSB*
+usb_relay_port: /dev/ttyUSB0
+usb_relay_baudrate: 9600
+
+save_raw: false
+raw_output_dir: runs/tensorrt_raw_outputs
+mask_output_dir: runs/tensorrt_mask_overlays
+overlap_output_dir: runs/tensorrt_overlap_visualizations
+clearance_output_dir: runs/stent_clearance_checks
+no_mask_overlays: false
+no_overlap_visuals: false
+no_clearance_visuals: false
+skip_missing_class_postprocess: true
+no_live_visualization: false # visualizer only: show raw live feed without clearance overlays/runtime panel
+
+self_test: false

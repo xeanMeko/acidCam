@@ -1,0 +1,19 @@
+path: .
+train: train
+val: valid
+test: test
+
+nc: 3
+names:
+  0: acidCam
+  1: Dorn
+  2: StentClearance
+
+# Augmentation parameters
+hsv_h: 0.7
+hsv_s: 0.7
+hsv_v: 0.7
+degrees: 0.0
+translate: 0.1
+scale: 0.5
+shear: 0.0
